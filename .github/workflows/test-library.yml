@@ -1,0 +1,35 @@
+name: Test Library
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actions Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install GTest and Clang++
+        run: |
+          sudo apt update
+          sudo apt install -y libgtest-dev clang
+
+      - name: Install Arduino CLI
+        working-directory: ./
+        run: |
+          make deps
+
+      - name: Run All Test
+        working-directory: ./
+        run: |
+          make test
