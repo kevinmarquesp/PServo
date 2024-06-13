@@ -1,5 +1,5 @@
 VENDOR = extra/vendor
-SKETCH = examples/*
+SKETCHES = examples/*
 BIN = bin
 SRC = src
 
@@ -28,17 +28,17 @@ default: upload serial
 
 .PHONY: deps
 deps:
-	git submodule update --init --recursive
 	$(ACC) core install $(CORE)
+	git submodule update --init --recursive
 	mkdir -p $(GTEST)/build && cd $(GTEST)/build && cmake .. && make
 
 .PHONY: compile
-compile:
-	$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $(SKETCH)
+compile: $(SKETCHES)
+	$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $^
 
 .PHONY: upload
-upload: compile
-	$(ACC) upload --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $(SKETCH)
+upload: $(SKETCHES)
+	$(ACC) upload --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $^
 
 .PHONY: serial
 serial:
