@@ -24,11 +24,10 @@ GTEST_INIT = $(GTEST_DIR)/main.cpp
 GTEST_SRCS = $(wildcard $(GTEST_DIR)/test_*.cpp)
 
 .PHONY: default
-default: upload serial
+default: compile test
 
 .PHONY: deps
 deps:
-	$(ACC) core install $(CORE)
 	git submodule update --init --recursive
 	mkdir -p $(GTEST)/build && cd $(GTEST)/build && cmake .. && make
 
