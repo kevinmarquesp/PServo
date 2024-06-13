@@ -3,7 +3,7 @@ SKETCH = examples/*
 SRC = src
 
 VENDOR = extra/vendor
-LIBS = --library $(SRC)
+LIBS = --library $(SRC) --library $(VENDOR)/Servo/src
 
 PORT = /dev/ttyUSB0
 BOARD = arduino:avr:uno
