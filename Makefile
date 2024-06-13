@@ -11,6 +11,7 @@ BAUD = 115200
 
 .PHONY: deps
 deps:
+	which arduino-cli || curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 	git submodule update --init --recursive
 
 .PHONY: default
