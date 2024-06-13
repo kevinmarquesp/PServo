@@ -49,7 +49,7 @@ test: test/build
 
 .PHONY: test/build
 test/build: $(GTEST_SRCS) $(GTEST_INIT)
-	mkdir -v $(BIN)
+	[ -e $(BIN) ] || mkdir -v $(BIN)
 	$(CC) $(CC_FLAGS) $^ -o $(GTEST_BIN) $(GTEST_LIBS) $(LD_FLAGS)
 
 .PHONY: clean
