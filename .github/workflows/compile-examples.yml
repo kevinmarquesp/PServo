@@ -22,9 +22,9 @@ jobs:
       - name: Install Arduino CLI
         working-directory: ./
         run: |
-          make ARDUINO_CLI=bin/arduino-cli deps
+          make deps
 
       - name: Compile Examples
         working-directory: ./
         run: |
-          make ARDUINO_CLI=bin/arduino-cli compile
+          make compile
