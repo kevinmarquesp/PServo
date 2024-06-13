@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     name: Build
@@ -19,17 +23,17 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install GTest and Clang++
+      - name: Install Clang++, Make and CMake
         run: |
           sudo apt update
-          sudo apt install -y libgtest-dev clang
+          sudo apt install -y clang make cmake
 
-      - name: Install Arduino CLI
+      - name: Build the C++ Dependencies
         working-directory: ./
         run: |
           make deps
 
-      - name: Run All Test
+      - name: Run All Tests
         working-directory: ./
         run: |
           make test
