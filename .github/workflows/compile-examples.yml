@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     name: Build
@@ -22,9 +26,13 @@ jobs:
       - name: Install Arduino CLI
         working-directory: ./
         run: |
-          make deps
+          mkdir -vp ~/.local/bin
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh |
+            BINDIR=~/.local/bin sh
+          arduino-cli core install arduino:avr
 
       - name: Compile Examples
         working-directory: ./
         run: |
+          git submodule update --init --recursive
           make compile
