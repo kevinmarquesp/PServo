@@ -1,3 +1,6 @@
 [submodule "extra/vendor/Servo"]
 	path = extra/vendor/Servo
 	url = https://github.com/arduino-libraries/Servo
+[submodule "extra/vendor/googletest"]
+	path = extra/vendor/googletest
+	url = https://github.com/google/googletest
