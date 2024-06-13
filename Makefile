@@ -1,30 +1,36 @@
 VENDOR = extra/vendor
 SKETCH = examples/*
+BIN = bin
 SRC = src
 
-GTEST_DIR = extra/gtest
-GTEST_INIT = $(GTEST_DIR)/main.cpp
-GTEST_SRC = $(wildcard $(GTEST_DIR)/test_*.cpp)
-GTEST_TARGET = bin/gtest
-
-ACC = bin/arduino-cli
+ACC = arduino-cli
 ACC_FLAGS = --library $(SRC) --library $(VENDOR)/Servo/src
-CC = clang++
-CC_FLAGS = -Wall -lgtest
 
 PORT = /dev/ttyUSB0
 CORE = arduino:avr
 BOARD = arduino:avr:uno
 BAUD = 115200
 
+CC = clang++
+CC_FLAGS = -Wall -I$(VENDOR)/googletest/googletest/include -I$(VENDOR)/googletest/googletest
+LD_FLAGS = -lpthread
+
+GTEST = $(VENDOR)/googletest
+GTEST_LIBS = $(GTEST)/build/lib/libgtest.a $(GTEST)/build/lib/libgtest_main.a
+
+GTEST_BIN = $(BIN)/gtest
+GTEST_DIR = extra/gtest
+GTEST_INIT = $(GTEST_DIR)/main.cpp
+GTEST_SRCS = $(wildcard $(GTEST_DIR)/test_*.cpp)
+
 .PHONY: default
 default: upload serial
 
 .PHONY: deps
 deps:
-	curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-	$(ACC) core install $(CORE)
 	git submodule update --init --recursive
+	$(ACC) core install $(CORE)
+	mkdir -p $(GTEST)/build && cd $(GTEST)/build && cmake .. && make
 
 .PHONY: compile
 compile:
@@ -40,12 +46,14 @@ serial:
 
 .PHONY: test
 test: test/build
-	./$(GTEST_TARGET)
+	./$(GTEST_BIN)
 
 .PHONY: test/build
-test/build:
-	$(CC) $(CC_FLAGS) $(GTEST_SRC) $(GTEST_INIT) -o $(GTEST_TARGET)
+test/build: $(GTEST_SRCS) $(GTEST_INIT)
+	mkdir -v $(BIN)
+	$(CC) $(CC_FLAGS) $^ -o $(GTEST_BIN) $(GTEST_LIBS) $(LD_FLAGS)
 
 .PHONY: clean
 clean:
 	rm -vrf bin
+	rm -vrf $(GTEST)/build
