@@ -1,0 +1,30 @@
+name: Compile Examples
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actions Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install Arduino CLI
+        working-directory: ./
+        run: |
+          make ARDUINO_CLI=bin/arduino-cli deps
+
+      - name: Compile Examples
+        working-directory: ./
+        run: |
+          make ARDUINO_CLI=bin/arduino-cli compile
