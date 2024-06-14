@@ -1,8 +1,8 @@
 #pragma once
 
-namespace PServo {
+namespace ps {
 enum class State : unsigned char {
-  STAND_BY,
+  STANDBY,
   INITIALIZED,
   MOVING,
   WAITING,
@@ -18,9 +18,6 @@ unsigned char const DELAY = 1;
 }; // namespace Default
 
 typedef struct Props {
-  State state;
-  bool is_status_ok;
-
   unsigned char min;
   unsigned char max;
   bool is_resetable;
@@ -29,13 +26,17 @@ typedef struct Props {
   unsigned char actions_count;
   unsigned char pos;
   unsigned short delay;
-} props;
+} Props;
 
 class PServo {
 public:
-  PServo(unsigned char const min, unsigned char const, bool max)
-      : _min(min), _max(max) {}
   PServo() {}
+  PServo(bool const is_resetable) : _is_resetable(is_resetable) {}
+  PServo(unsigned char const min, unsigned char const max)
+      : _min(min), _max(max) {}
+  PServo(unsigned char const min, unsigned char const max,
+         bool const is_resetable)
+      : _min(min), _max(max), _is_resetable(is_resetable) {}
 
   void refresh(unsigned long const *timer);
   unsigned char get_pos(void);
@@ -46,13 +47,11 @@ public:
   PServo *move(unsigned char const next_pos, unsigned short const delay);
   PServo *halt(void);
 
-  props get_props(void);
+  Props get_props(void);
   State get_state(void);
-  bool is_status_ok(void);
 
 private:
-  State _state = State::STAND_BY;
-  bool _is_status_ok = true;
+  State _state = State::STANDBY;
 
   unsigned long _pc = 0;
   unsigned long *_timer = nullptr;
@@ -66,4 +65,4 @@ private:
   unsigned char _pos = 0;
   unsigned short _delay = Default::DELAY;
 };
-}; // namespace PServo
+}; // namespace ps
