@@ -7,8 +7,7 @@ enum class State : unsigned char {
   MOVING,
   WAITING,
   DONE,
-  PAUSED,
-  ERROR_UNINITIALIZED
+  PAUSED
 };
 
 namespace Default {
@@ -18,6 +17,8 @@ unsigned char const DELAY = 1;
 }; // namespace Default
 
 typedef struct Props {
+  unsigned long pc;
+
   unsigned char min;
   unsigned char max;
   bool is_resetable;
@@ -38,7 +39,7 @@ public:
          bool const is_resetable)
       : _min(min), _max(max), _is_resetable(is_resetable) {}
 
-  void refresh(unsigned long const *timer);
+  void refresh(unsigned long *const timer);
   unsigned char get_pos(void);
 
   PServo *begin(void);
@@ -65,4 +66,6 @@ private:
   unsigned char _pos = 0;
   unsigned short _delay = Default::DELAY;
 };
+
+char const *state_text(State s);
 }; // namespace ps
