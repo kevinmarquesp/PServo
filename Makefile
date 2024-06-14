@@ -21,7 +21,8 @@ GTEST_LIBS = $(GTEST)/build/lib/libgtest.a $(GTEST)/build/lib/libgtest_main.a
 GTEST_BIN = $(BIN)/gtest
 GTEST_DIR = extra/gtest
 GTEST_INIT = $(GTEST_DIR)/main.cpp
-GTEST_SRCS = $(wildcard $(GTEST_DIR)/test_*.cpp)
+GTEST_UNITS = $(wildcard $(GTEST_DIR)/test_*.cpp)
+GTEST_SRCS = $(wildcard $(SRC)/*.cpp)
 
 .PHONY: default
 default: compile test
@@ -48,7 +49,7 @@ test: test/build
 	./$(GTEST_BIN)
 
 .PHONY: test/build
-test/build: $(GTEST_SRCS) $(GTEST_INIT)
+test/build: $(GTEST_SRCS) $(GTEST_UNITS) $(GTEST_INIT)
 	[ -e $(BIN) ] || mkdir -v $(BIN)
 	$(CC) $(CC_FLAGS) $^ -o $(GTEST_BIN) $(GTEST_LIBS) $(LD_FLAGS)
 
