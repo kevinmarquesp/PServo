@@ -38,11 +38,11 @@ compile: $(SKETCHES)
 
 .PHONY: upload
 upload: $(SKETCHES)
-	$(ACC) upload --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $^
+	$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) --upload $^
 
 .PHONY: serial
 serial:
-	$(ACC) monitor $(ACC_FLAGS) --port $(PORT) --config "baudrate=$(BAUD)"
+	$(ACC) monitor --port $(PORT) --config "baudrate=$(BAUD)"
 
 .PHONY: test
 test: test/build
