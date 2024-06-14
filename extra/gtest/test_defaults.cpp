@@ -10,6 +10,7 @@ TEST(Defaults, should_return_default_constructor_props) {
   Props const p = pservo.get_props();
 
   EXPECT_EQ(s, State::STANDBY);
+  EXPECT_EQ(p.pc, 0);
   EXPECT_EQ(p.min, Default::MIN);
   EXPECT_EQ(p.max, Default::MAX);
   EXPECT_FALSE(p.is_resetable);
