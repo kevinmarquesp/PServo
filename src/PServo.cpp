@@ -1,9 +1,10 @@
 #include "PServo.h"
 
-using namespace ps;
+ps::Props ps::PServo::get_props(void) {
+  using namespace ps;
 
-Props PServo::get_props(void) {
   return Props{
+      .pc = _pc,
       .min = _min,
       .max = _max,
       .is_resetable = _is_resetable,
@@ -14,4 +15,16 @@ Props PServo::get_props(void) {
   };
 }
 
-State PServo::get_state(void) { return _state; }
+ps::State ps::PServo::get_state(void) { return _state; }
+
+char const *ps::state_text(ps::State s) {
+  using namespace ps;
+
+  return s == State::STANDBY       ? "STANDBY"
+         : s == State::INITIALIZED ? "INITIALIZED"
+         : s == State::MOVING      ? "MOVING"
+         : s == State::WAITING     ? "WAITING"
+         : s == State::DONE        ? "DONE"
+         : s == State::PAUSED      ? "PAUSED"
+                                   : "UNKNOWN";
+}
