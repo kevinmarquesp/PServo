@@ -49,7 +49,6 @@ public:
   PServo *begin(void);
   PServo *move(unsigned char const next_pos, unsigned short const delay);
   PServo *move(unsigned char const next_pos);
-  PServo *halt(void);
 
   Props get_props(void);
   State get_state(void);
