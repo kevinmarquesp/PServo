@@ -36,8 +36,8 @@ ps::PServo *ps::PServo::begin(void) {
     _pc = *_timer;
     break;
 
+  case State::IN_ACTION:
   case State::HALT:
-    break;
   case State::ERROR_NOACTION:
     break;
 
