@@ -42,7 +42,7 @@ inline void state_logger(char *const buff, const ps::PServo *const pservo) {
   char const *s = state_text(pservo->get_state());
   Props const p = pservo->get_props();
 
-  sprintf(buff, "[%.4d|%.4d] %3dº with %.4d, %2d/%d in %s",
+  sprintf(buff, "[%.4d|%.4d] %3dº with %.4d, %2d %2d/%d in %s",
           (unsigned short)timer, (unsigned short)p.pc, p.pos, p.delay,
-          p.curr_action, p.actions_count, s);
+          p.active_action, p.curr_action, p.actions_count, s);
 }
