@@ -114,6 +114,7 @@ ps::Props ps::PServo::get_props(void) {
   using namespace ps;
 
   return Props{
+      .state = _state,
       .pc = _pc,
       .timer = _timer,
       .min = _min,
