@@ -97,9 +97,8 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
     break;
 
   case State::PAUSED:
-    break;
   case State::HALT:
-    break;
+  case State::DONE: // NOTE: Maybe it's better to handle this state here...
   case State::ERROR_NOACTION:
     break;
 
