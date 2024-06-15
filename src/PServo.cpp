@@ -3,6 +3,8 @@
 ps::PServo *ps::PServo::begin(void) {
   using namespace ps;
 
+  _curr_action = 0;
+
   switch (_state) {
   case State::STANDBY: // Initialize the machine action counter before run.
     _state = State::INITIALIZED;
@@ -18,12 +20,16 @@ ps::PServo *ps::PServo::begin(void) {
     break;
 
   case State::DONE: // Reset or stop the machine if done, or goto next movement.
-    if (_active_action > _actions_count) {
+    if (_active_action >= _actions_count) {
       if (_is_resetable)
         _reset_active_action_then_move();
       else
         _state = State::HALT;
+
+      break;
     }
+
+    ++_active_action;
 
     break;
 
@@ -100,6 +106,8 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
   default:
     _state = State::ERROR_UNEXPECTED;
   }
+
+  ++_curr_action;
 
   return this;
 }
