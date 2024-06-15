@@ -33,15 +33,20 @@ typedef struct Props {
 
 class PServo {
 public:
-  PServo() {}
-  PServo(bool const is_resetable) : _is_resetable(is_resetable) {}
-  PServo(unsigned char const min, unsigned char const max)
-      : _min(min), _max(max) {}
-  PServo(unsigned char const min, unsigned char const max,
-         bool const is_resetable)
-      : _min(min), _max(max), _is_resetable(is_resetable) {}
+  PServo(unsigned long *const timer) : _timer(timer) {}
 
-  PServo *begin(unsigned long const timer);
+  PServo(unsigned long *const timer, bool const is_resetable)
+      : _timer(timer), _is_resetable(is_resetable) {}
+
+  PServo(unsigned long *const timer, unsigned char const min,
+         unsigned char const max)
+      : _timer(timer), _min(min), _max(max) {}
+
+  PServo(unsigned long *const timer, unsigned char const min,
+         unsigned char const max, bool const is_resetable)
+      : _timer(timer), _min(min), _max(max), _is_resetable(is_resetable) {}
+
+  PServo *begin(void);
   PServo *move(unsigned char const next_pos, unsigned short const delay);
   PServo *move(unsigned char const next_pos);
   PServo *halt(void);
@@ -53,7 +58,7 @@ private:
   State _state = State::STANDBY;
 
   unsigned long _pc = 0;
-  unsigned long _timer = 0;
+  unsigned long *const _timer = nullptr;
 
   unsigned char _min = Default::MIN;
   unsigned char _max = Default::MAX;
