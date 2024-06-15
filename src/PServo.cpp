@@ -27,7 +27,7 @@ ps::PServo *ps::PServo::begin(void) {
 
     break;
 
-  case State::PAUSED:
+  case State::PAUSED: // To keep pause, don't do anything, just update _pc.
     if (_timer == nullptr) {
       _state = State::ERROR_TIMERPTR;
       break;
@@ -128,6 +128,9 @@ ps::State ps::PServo::get_state(void) { return _state; }
 
 char const *ps::state_text(ps::State s) {
   using namespace ps;
+
+  // Vim macro that may help some developers...
+  // :nnoremap UU $dlIs == State::<esc>lyiwA ? "<esc>pA" :<esc>j0
 
   return s == State::STANDBY            ? "STANDBY"
          : s == State::INITIALIZED      ? "INITIALIZED"
