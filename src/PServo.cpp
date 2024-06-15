@@ -22,7 +22,7 @@ ps::PServo *ps::PServo::begin(void) {
       if (_is_resetable)
         _reset_active_action_then_move();
       else
-        _state = State::HALTED;
+        _state = State::HALT;
     }
 
     break;
@@ -36,7 +36,7 @@ ps::PServo *ps::PServo::begin(void) {
     _pc = *_timer;
     break;
 
-  case State::HALTED:
+  case State::HALT:
     break;
   case State::ERROR_NOMOVE:
     break;
@@ -90,7 +90,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
 
   case State::PAUSED:
     break;
-  case State::HALTED:
+  case State::HALT:
     break;
   case State::ERROR_NOMOVE:
     break;

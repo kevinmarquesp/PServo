@@ -4,9 +4,8 @@ namespace ps {
 enum class State : unsigned char {
   STANDBY,
   INITIALIZED,
-  HALTED,
+  HALT,
   IN_ACTION,
-  WAITING,
   DONE,
   PAUSED,
   ERROR_UNEXPECTED,
