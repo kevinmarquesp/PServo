@@ -11,7 +11,7 @@ inline void display_header(void);
 inline void state_logger(char *const buffer, const ps::PServo *const pservo);
 inline void main_loop(void);
 
-ps::PServo *const my_servo = new ps::PServo(true);
+ps::PServo *const my_servo = new ps::PServo(&timer);
 
 void setup(void) {
   pinMode(__BUTTON_PIN, OUTPUT);
