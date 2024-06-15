@@ -19,13 +19,17 @@ unsigned char const DELAY = 1;
 }; // namespace Default
 
 typedef struct Props {
+  State state;
+
   unsigned long pc;
+  unsigned long *const timer;
 
   unsigned char min;
   unsigned char max;
   bool is_resetable;
 
   unsigned char curr_action;
+  unsigned char active_action;
   unsigned char actions_count;
   unsigned char pos;
   unsigned short delay;
@@ -64,6 +68,7 @@ private:
   bool _is_resetable = false;
 
   unsigned char _curr_action = 0;
+  unsigned char _active_action = 0;
   unsigned char _actions_count = 0;
   unsigned char _pos = 0;
   unsigned short _delay = Default::DELAY;
