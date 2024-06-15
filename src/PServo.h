@@ -5,11 +5,12 @@ enum class State : unsigned char {
   STANDBY,
   INITIALIZED,
   HALTED,
-  MOVING,
+  IN_ACTION,
   WAITING,
   DONE,
   PAUSED,
   ERROR_UNEXPECTED,
+  ERROR_NOMOVE,
 };
 
 namespace Default {
@@ -32,7 +33,6 @@ typedef struct Props {
   unsigned char active_action;
   unsigned char actions_count;
   unsigned char pos;
-  unsigned short delay;
 } Props;
 
 class PServo {
@@ -71,7 +71,8 @@ private:
   unsigned char _active_action = 0;
   unsigned char _actions_count = 0;
   unsigned char _pos = 0;
-  unsigned short _delay = Default::DELAY;
+
+  inline void _reset_active_action_then_move(void);
 };
 
 char const *state_text(State s);
