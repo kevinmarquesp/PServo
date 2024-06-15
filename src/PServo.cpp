@@ -28,6 +28,11 @@ ps::PServo *ps::PServo::begin(void) {
     break;
 
   case State::PAUSED:
+    if (_timer == nullptr) {
+      _state = State::ERROR_TIMERPTR;
+      break;
+    }
+
     _pc = *_timer;
     break;
 
@@ -63,6 +68,11 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
     break;
 
   case State::IN_ACTION: // Start the async timer for the current action.
+    if (_timer == nullptr) {
+      _state = State::ERROR_TIMERPTR;
+      break;
+    }
+
     if (_active_action != _curr_action)
       break;
 

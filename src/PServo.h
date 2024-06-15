@@ -11,6 +11,7 @@ enum class State : unsigned char {
   PAUSED,
   ERROR_UNEXPECTED,
   ERROR_NOMOVE,
+  ERROR_TIMERPTR,
 };
 
 namespace Default {
