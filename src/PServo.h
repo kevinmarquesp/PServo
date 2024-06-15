@@ -4,10 +4,12 @@ namespace ps {
 enum class State : unsigned char {
   STANDBY,
   INITIALIZED,
+  HALTED,
   MOVING,
   WAITING,
   DONE,
-  PAUSED
+  PAUSED,
+  ERROR_UNEXPECTED,
 };
 
 namespace Default {
@@ -39,13 +41,9 @@ public:
          bool const is_resetable)
       : _min(min), _max(max), _is_resetable(is_resetable) {}
 
-  void refresh(unsigned long *const timer);
-  unsigned char get_pos(void);
-
-  PServo *begin(void);
-  PServo *wait(bool proceed);
-  PServo *move(unsigned char const next_pos);
+  PServo *begin(unsigned long const timer);
   PServo *move(unsigned char const next_pos, unsigned short const delay);
+  PServo *move(unsigned char const next_pos);
   PServo *halt(void);
 
   Props get_props(void);
@@ -55,7 +53,7 @@ private:
   State _state = State::STANDBY;
 
   unsigned long _pc = 0;
-  unsigned long *_timer = nullptr;
+  unsigned long _timer = 0;
 
   unsigned char _min = Default::MIN;
   unsigned char _max = Default::MAX;
