@@ -129,11 +129,14 @@ ps::State ps::PServo::get_state(void) { return _state; }
 char const *ps::state_text(ps::State s) {
   using namespace ps;
 
-  return s == State::STANDBY       ? "STANDBY"
-         : s == State::INITIALIZED ? "INITIALIZED"
-         : s == State::IN_ACTION   ? "IN_ACTION"
-         : s == State::WAITING     ? "WAITING"
-         : s == State::DONE        ? "DONE"
-         : s == State::PAUSED      ? "PAUSED"
-                                   : "";
+  return s == State::STANDBY            ? "STANDBY"
+         : s == State::INITIALIZED      ? "INITIALIZED"
+         : s == State::HALT             ? "HALT"
+         : s == State::IN_ACTION        ? "IN_ACTION"
+         : s == State::DONE             ? "DONE"
+         : s == State::PAUSED           ? "PAUSED"
+         : s == State::ERROR_UNEXPECTED ? "ERROR_UNEXPECTED"
+         : s == State::ERROR_NOMOVE     ? "ERROR_NOMOVE"
+         : s == State::ERROR_TIMERPTR   ? "ERROR_TIMERPTR"
+                                        : "";
 }
