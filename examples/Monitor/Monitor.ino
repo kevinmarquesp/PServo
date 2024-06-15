@@ -34,7 +34,12 @@ void loop(void) {
   ++timer;
 }
 
-inline void main_loop(void) {}
+inline void main_loop(void) {
+  // NOTE: These values should be deg and delay (in ms), but the delay are now
+  // a simple decimal counter for debug reasons...
+
+  my_servo->begin()->move(5, 3)->move(10, 3);
+}
 
 inline void state_logger(char *const buff, const ps::PServo *const pservo) {
   using namespace ps;
