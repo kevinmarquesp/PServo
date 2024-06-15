@@ -10,7 +10,7 @@ ps::PServo *ps::PServo::begin(void) {
 
   case State::INITIALIZED: // Here, it will be ready to start the movements.
     if (_actions_count < 1) {
-      _state = State::ERROR_NOMOVE;
+      _state = State::ERROR_NOACTION;
       break;
     }
 
@@ -38,7 +38,7 @@ ps::PServo *ps::PServo::begin(void) {
 
   case State::HALT:
     break;
-  case State::ERROR_NOMOVE:
+  case State::ERROR_NOACTION:
     break;
 
   default:
@@ -50,7 +50,7 @@ ps::PServo *ps::PServo::begin(void) {
 
 inline void ps::PServo::_reset_active_action_then_move(void) {
   if (_actions_count < 1) {
-    _state = State::ERROR_NOMOVE;
+    _state = State::ERROR_NOACTION;
     return;
   }
 
@@ -94,7 +94,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
     break;
   case State::HALT:
     break;
-  case State::ERROR_NOMOVE:
+  case State::ERROR_NOACTION:
     break;
 
   default:
@@ -143,7 +143,7 @@ char const *ps::state_text(ps::State s) {
          : s == State::DONE             ? "DONE"
          : s == State::PAUSED           ? "PAUSED"
          : s == State::ERROR_UNEXPECTED ? "ERROR_UNEXPECTED"
-         : s == State::ERROR_NOMOVE     ? "ERROR_NOMOVE"
+         : s == State::ERROR_NOACTION   ? "ERROR_NOMOVE"
          : s == State::ERROR_TIMERPTR   ? "ERROR_TIMERPTR"
                                         : "";
 }

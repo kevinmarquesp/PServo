@@ -9,7 +9,7 @@ enum class State : unsigned char {
   DONE,
   PAUSED,
   ERROR_UNEXPECTED,
-  ERROR_NOMOVE,
+  ERROR_NOACTION,
   ERROR_TIMERPTR,
 };
 
