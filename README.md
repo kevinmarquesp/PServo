@@ -34,14 +34,5 @@ make test
 
 ```bash
 make deps
-make test GTEST_SRCS=extra/gtest/test_gtest.cpp
+make test GTEST_UNITS=extra/gtest/test_gtest.cpp
 ```
-
-
-### Todos
-
-* [x] Include the current state on the `PServo::get_props()` method.
-  * [ ] Update the `Defaults` test cases to include the new *props* values.
-* [ ] Use a `unsigned long *const` (16 bits) for the *timer* property.
-  * [ ] Update the `Defaults` test cases to use the correct constructor.
-  * [ ] Update the `MValues` test cases to use construct the timer properly.
