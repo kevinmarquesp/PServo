@@ -20,6 +20,8 @@ ps::PServo *ps::PServo::begin(void) {
     break;
 
   case State::DONE: // Reset or stop the machine if done, or goto next movement.
+    ++_active_action;
+
     if (_active_action >= _actions_count) {
       if (_is_resetable)
         _reset_active_action_then_move();
@@ -29,8 +31,7 @@ ps::PServo *ps::PServo::begin(void) {
       break;
     }
 
-    ++_active_action;
-
+    _state = State::IN_ACTION;
     break;
 
   case State::PAUSED: // To keep pause, don't do anything, just update _pc.
