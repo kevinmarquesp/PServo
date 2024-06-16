@@ -97,9 +97,23 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
 
     break;
 
+  case State::DONE: // When the previous action are done, go to the next one.
+    ++_active_action;
+
+    if (_active_action >= _actions_count) {
+      if (_is_resetable)
+        _reset_active_action_then_move();
+      else
+        _state = State::HALT;
+
+      break;
+    }
+
+    _state = State::IN_ACTION;
+    break;
+
   case State::PAUSED:
   case State::HALT:
-  case State::DONE: // NOTE: Maybe it's better to handle this state here...
   case State::ERROR_NOACTION:
     break;
 
