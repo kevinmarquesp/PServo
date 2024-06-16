@@ -101,21 +101,20 @@ TEST(Values, should_update_active_action_after_the_previous_was_completed) {
   ASSERT_EQ(pservo.get_props().active_action, 2);
 
   for (unsigned char i = 0; i < 6; ++i) { // From 10deg to 15deg! The 6th should
-                                          // mark the state as State::DONE.
+                                          // halt the state machine.
     timer += 4;
 
     pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
   }
 
-  ASSERT_EQ(pservo.get_props().active_action, 2);
+  ASSERT_EQ(pservo.get_props().active_action, 3);
 
   // No matter how I try, it can't keep adding 1 to the active state variable.
 
-  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
-  ASSERT_EQ(pservo.get_props().active_action, 3);
-
-  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
-  ASSERT_EQ(pservo.get_props().active_action, 3);
+  for (unsigned char i = 0; i < 255; ++i) {
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+    ASSERT_EQ(pservo.get_props().active_action, 3);
+  }
 }
 
 /*******************************************************************************
