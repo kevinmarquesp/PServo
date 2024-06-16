@@ -16,22 +16,11 @@ ps::PServo *ps::PServo::begin(void) {
       break;
     }
 
-    _reset_active_action_then_move();
+    _reset_active_action_to_start_again();
     break;
 
   case State::DONE: // Reset or stop the machine if done, or goto next movement.
-    ++_active_action;
-
-    if (_active_action >= _actions_count) {
-      if (_is_resetable)
-        _reset_active_action_then_move();
-      else
-        _state = State::HALT;
-
-      break;
-    }
-
-    _state = State::IN_ACTION;
+    _reset_or_update_and_start_next_action();
     break;
 
   case State::PAUSED: // To keep pause, don't do anything, just update _pc.
@@ -53,16 +42,6 @@ ps::PServo *ps::PServo::begin(void) {
   }
 
   return this;
-}
-
-inline void ps::PServo::_reset_active_action_then_move(void) {
-  if (_actions_count < 1) {
-    _state = State::ERROR_NOACTION;
-    return;
-  }
-
-  _state = State::IN_ACTION;
-  _active_action = 0;
 }
 
 ps::PServo *ps::PServo::move(unsigned char const next_pos,
@@ -98,18 +77,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
     break;
 
   case State::DONE: // When the previous action are done, go to the next one.
-    ++_active_action;
-
-    if (_active_action >= _actions_count) {
-      if (_is_resetable)
-        _reset_active_action_then_move();
-      else
-        _state = State::HALT;
-
-      break;
-    }
-
-    _state = State::IN_ACTION;
+    _reset_or_update_and_start_next_action();
     break;
 
   case State::PAUSED:
@@ -124,6 +92,31 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
   ++_curr_action;
 
   return this;
+}
+
+inline void ps::PServo::_reset_or_update_and_start_next_action(void) {
+  ++_active_action;
+
+  if (_active_action >= _actions_count) {
+    if (_is_resetable)
+      _reset_active_action_to_start_again();
+    else
+      _state = State::HALT;
+
+    return;
+  }
+
+  _state = State::IN_ACTION;
+}
+
+inline void ps::PServo::_reset_active_action_to_start_again(void) {
+  if (_actions_count < 1) {
+    _state = State::ERROR_NOACTION;
+    return;
+  }
+
+  _state = State::IN_ACTION;
+  _active_action = 0;
 }
 
 ps::PServo *ps::PServo::move(unsigned char const next_pos) {

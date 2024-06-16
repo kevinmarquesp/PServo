@@ -74,7 +74,8 @@ private:
   unsigned char _pos = 0;
   unsigned short _delay = 0;
 
-  inline void _reset_active_action_then_move(void);
+  inline void _reset_active_action_to_start_again(void);
+  inline void _reset_or_update_and_start_next_action(void);
 };
 
 char const *state_text(State s);
