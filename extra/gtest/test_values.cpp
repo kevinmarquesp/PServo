@@ -108,22 +108,33 @@ TEST(Values, should_update_active_action_after_the_previous_was_completed) {
   }
 
   ASSERT_EQ(pservo.get_props().active_action, 3);
-
-  // No matter how I try, it can't keep adding 1 to the active state variable.
-
-  for (unsigned char i = 0; i < 255; ++i) {
-    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
-    ASSERT_EQ(pservo.get_props().active_action, 3);
-  }
 }
 
-/*******************************************************************************
 TEST(Values, should_halt_the_machine_after_the_last_movement) {
   using namespace ps;
 
   unsigned long timer = 0;
 
   PServo pservo(&timer, 0, 180, false);
+
+  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+
+  for (unsigned char i = 0; i < 5 * 4; ++i) { // This weird calculation is
+                                              // used to simulate the
+                                              // loops necessary to go to
+                                              // halt the code, given
+                                              // those 5 steped degree.
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  for (unsigned char i = 0; i < 255; ++i) { // No matter how much I try, it
+                                            // can't keep adding 1 to the active
+                                            // state variable.
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+    ASSERT_EQ(pservo.get_props().active_action, 3);
+  }
 }
 
 TEST(Values, should_reset_to_initialized_state_if_marked_as_reset) {
