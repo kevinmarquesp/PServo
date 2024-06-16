@@ -46,7 +46,7 @@ serial:
 
 .PHONY: test
 test: test/build
-	./$(GTEST_BIN)
+	./$(GTEST_BIN) --gtest_break_on_failure
 
 .PHONY: test/build
 test/build: $(GTEST_SRCS) $(GTEST_UNITS) $(GTEST_INIT)
