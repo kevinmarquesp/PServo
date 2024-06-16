@@ -42,9 +42,9 @@ enum class State : unsigned char {
  * the `ps::PServo` object with these default values...
  */
 namespace Default {
-unsigned char const MIN = 0;
-unsigned char const MAX = 180;
-unsigned char const DELAY = 1;
+unsigned char constexpr MIN = 0;
+unsigned char constexpr MAX = 180;
+unsigned char constexpr DELAY = 1;
 }; // namespace Default
 
 /*!
@@ -127,8 +127,8 @@ public:
   PServo *move(unsigned char const next_pos, unsigned short const delay);
   PServo *move(unsigned char const next_pos);
 
-  Props get_props(void);
-  State get_state(void);
+  Props const get_props(void) const;
+  State const get_state(void) const;
 
 private:
   State _state = State::STANDBY;

@@ -118,7 +118,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos) {
   return this->move(next_pos, Default::DELAY);
 }
 
-ps::Props ps::PServo::get_props(void) {
+ps::Props const ps::PServo::get_props(void) const {
   using namespace ps;
 
   return Props{
@@ -136,7 +136,7 @@ ps::Props ps::PServo::get_props(void) {
   };
 }
 
-ps::State ps::PServo::get_state(void) { return _state; }
+ps::State const ps::PServo::get_state(void) const { return _state; }
 
 char const *ps::state_text(ps::State s) {
   using namespace ps;
