@@ -73,7 +73,50 @@ TEST(Values, should_keep_updating_the_curr_action_position) {
   ASSERT_EQ(pservo.get_props().actions_count, 3);
 }
 
-TEST(Values, should_update_active_action_after_the_previous_was_completed) {}
+TEST(Values, should_update_active_action_after_the_previous_was_completed) {
+  using namespace ps;
+
+  unsigned long timer = 0;
+
+  PServo pservo(&timer, 0, 180, false);
+
+  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+
+  for (unsigned char i = 0; i < 6; ++i) { // From 0deg to 5deg! The 6th should
+                                          // start the next (1) action.
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  ASSERT_EQ(pservo.get_props().active_action, 1);
+
+  for (unsigned char i = 0; i < 6; ++i) { // From 5deg to 10deg! The 6th should
+                                          // start the next (1) action.
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  ASSERT_EQ(pservo.get_props().active_action, 2);
+
+  for (unsigned char i = 0; i < 6; ++i) { // From 10deg to 15deg! The 6th should
+                                          // mark the state as State::DONE.
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  ASSERT_EQ(pservo.get_props().active_action, 2);
+
+  // No matter how I try, it can't keep adding 1 to the active state variable.
+
+  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  ASSERT_EQ(pservo.get_props().active_action, 3);
+
+  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  ASSERT_EQ(pservo.get_props().active_action, 3);
+}
 
 /*******************************************************************************
 TEST(Values, should_halt_the_machine_after_the_last_movement) {
