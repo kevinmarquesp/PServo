@@ -142,6 +142,29 @@ TEST(Values, should_reset_to_initialized_state_if_marked_as_reset) {
 
   unsigned long timer = 0;
 
-  PServo pservo(&timer, 0, 180, true);
+  PServo pservo(&timer, 0, 180, true); // It is resetable!
+
+  pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+
+  for (unsigned char i = 0; i < 5 * 4; ++i) { // This weird calculation is
+                                              // used to simulate the
+                                              // loops necessary to go to
+                                              // halt the code, given
+                                              // those 5 steped degree.
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  ASSERT_EQ(pservo.get_props().active_action, 0); // After the final update, it
+                                                  // should start again instead
+                                                  // of halting the machine.
+
+  for (unsigned char i = 0; i < 5 * 4; ++i) {
+    timer += 4;
+
+    pservo.begin()->move(5, 3)->move(10, 3)->move(15, 3);
+  }
+
+  ASSERT_EQ(pservo.get_props().active_action, 0);
 }
-*******************************************************************************/
