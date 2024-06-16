@@ -71,7 +71,7 @@ private:
   unsigned char _active_action = 0;
   unsigned char _actions_count = 0;
   unsigned char _pos = 0;
-  unsigned short _delay = 0;
+  unsigned short _delay = Default::DELAY;
 
   inline void _reset_active_action_to_start_again(void);
   inline void _reset_or_update_and_start_next_action(void);
