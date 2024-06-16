@@ -69,7 +69,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
 
     _delay = delay;
 
-    if (*_timer - _pc > delay) {
+    if (*_timer - _pc >= delay) {
       _pc = *_timer;
       _pos = _pos < next_pos ? _pos + 1 : _pos - 1;
     }
