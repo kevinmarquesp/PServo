@@ -19,10 +19,6 @@ ps::PServo *ps::PServo::begin(void) {
     _reset_active_action_to_start_again();
     break;
 
-  case State::DONE: // Reset or stop the machine if done, or goto next movement.
-    _reset_or_update_and_start_next_action();
-    break;
-
   case State::PAUSED: // To keep pause, don't do anything, just update _pc.
     if (_timer == nullptr) {
       _state = State::ERROR_TIMERPTR;
@@ -63,7 +59,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
       break;
 
     if (_pos == next_pos) {
-      _state = State::DONE;
+      _reset_or_update_and_start_next_action();
       break;
     }
 
@@ -74,10 +70,6 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
       _pos = _pos < next_pos ? _pos + 1 : _pos - 1;
     }
 
-    break;
-
-  case State::DONE: // When the previous action are done, go to the next one.
-    _reset_or_update_and_start_next_action();
     break;
 
   case State::PAUSED:
@@ -156,7 +148,6 @@ char const *ps::state_text(ps::State s) {
          : s == State::INITIALIZED      ? "INITIALIZED"
          : s == State::HALT             ? "HALT"
          : s == State::IN_ACTION        ? "IN_ACTION"
-         : s == State::DONE             ? "DONE"
          : s == State::PAUSED           ? "PAUSED"
          : s == State::ERROR_UNEXPECTED ? "ERROR_UNEXPECTED"
          : s == State::ERROR_NOACTION   ? "ERROR_NOMOVE"

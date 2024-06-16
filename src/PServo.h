@@ -6,7 +6,6 @@ enum class State : unsigned char {
   INITIALIZED,
   HALT,
   IN_ACTION,
-  DONE,
   PAUSED,
   ERROR_UNEXPECTED,
   ERROR_NOACTION,
