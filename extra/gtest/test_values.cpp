@@ -40,8 +40,6 @@ TEST(Values, should_preserve_the_actions_count_after_initialization) {
   ASSERT_EQ(pservo.get_props().actions_count, ACTIONS_COUNT);
 }
 
-TEST(Values, should_update_active_action_after_the_previous_was_completed) {}
-
 TEST(Values, should_keep_updating_the_curr_action_position) {
   using namespace ps;
 
@@ -60,20 +58,22 @@ TEST(Values, should_keep_updating_the_curr_action_position) {
   ASSERT_EQ(pservo.get_props().actions_count, 3);
 
   pservo.move(5, 3);
-  ASSERT_EQ(pservo.get_props().curr_action, 0);
+  ASSERT_EQ(pservo.get_props().curr_action, 1); // Current action after update.
   ASSERT_EQ(pservo.get_props().active_action, 0);
   ASSERT_EQ(pservo.get_props().actions_count, 3);
 
   pservo.move(10, 3);
-  ASSERT_EQ(pservo.get_props().curr_action, 1);
+  ASSERT_EQ(pservo.get_props().curr_action, 2);
   ASSERT_EQ(pservo.get_props().active_action, 0);
   ASSERT_EQ(pservo.get_props().actions_count, 3);
 
   pservo.move(15, 3);
-  ASSERT_EQ(pservo.get_props().curr_action, 2);
+  ASSERT_EQ(pservo.get_props().curr_action, 3);
   ASSERT_EQ(pservo.get_props().active_action, 0);
   ASSERT_EQ(pservo.get_props().actions_count, 3);
 }
+
+TEST(Values, should_update_active_action_after_the_previous_was_completed) {}
 
 /*******************************************************************************
 TEST(Values, should_halt_the_machine_after_the_last_movement) {
