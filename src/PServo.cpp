@@ -110,7 +110,8 @@ inline void ps::PServo::_reset_or_update_and_start_next_action(void) {
 }
 
 inline void ps::PServo::_reset_active_action_to_start_again(void) {
-  if (_actions_count < 1) {
+  if (_actions_count < 1) { // This condition is useful for the first
+                            // PServo::begin() call.
     _state = State::ERROR_NOACTION;
     return;
   }
