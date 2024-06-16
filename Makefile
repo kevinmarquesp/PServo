@@ -34,11 +34,16 @@ deps:
 
 .PHONY: compile
 compile: $(SKETCHES)
-	$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $^
+	for i in $^; do \
+		$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) $$i; \
+	done;
 
 .PHONY: upload
-upload: $(SKETCHES)
-	$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) --upload $^
+upload: $(SKETCHES) # Will execute only for the first element on the list!
+	for i in $^; do \
+		$(ACC) compile --verbose $(ACC_FLAGS) --port $(PORT) --fqbn $(BOARD) --upload $$i; \
+		break; \
+	done;
 
 .PHONY: serial
 serial:
