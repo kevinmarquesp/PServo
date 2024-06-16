@@ -4,7 +4,7 @@ BIN = bin
 SRC = src
 
 ACC = arduino-cli
-ACC_FLAGS = --library $(SRC) --library $(VENDOR)/Servo/src
+ACC_FLAGS = --library $(SRC) --library $(VENDOR)/Servo
 
 PORT = /dev/ttyUSB0
 CORE = arduino:avr
