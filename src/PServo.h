@@ -269,8 +269,47 @@ public:
    * ```
    */
   PServo *begin(void);
-  PServo *move(unsigned char const next_pos, unsigned short const delay);
+
+  /*!
+   * This function just calls it self again, but passing the
+   * `ps::Default::DELAY` as a seccodary parameter to move (or, in this context,
+   * update the value of the `_pos` private attribute) is a specific speed.
+   *
+   * This function overload can be helpful because, in some cases, is necessary
+   * to just move the servo motors in an asynchronous way. So it helps to write
+   * less code and be more descriptve of **what** you want to do and not
+   * **how**.
+   *
+   * Check for more details the explaination of the full version of this
+   * function call, the one that you need to specify the movement speed too.
+   *
+   * @param next_pos Next position that it needs to move to.
+   */
   PServo *move(unsigned char const next_pos);
+
+  /*!
+   * This method will start the **movement** action, it only works if the
+   * machine is in the `ps::State::IN_ACTION`, otherwise, it will perform
+   * nothing.
+   *
+   * > **Note**: In `ps::State::INITIALIZED` mode, it will, actually, count the
+   * > movement. This is because the first run of the move set is for
+   * > determining how much moves it should do before halt/reset.
+   *
+   * The `delay` paramter is not the overall duration of the movement! It is,
+   * actually, the delay between each degree from the the current position to
+   * the next one. For an example, if you're at `0` and want to go to `180` with
+   * `10` for delay, the overall duration will be `1.8` seconds.
+   *
+   * Since this function is asynchronous, it **should be called every time in
+   * the `loop()` function**! That's because it uses the `_timer` value --
+   * defined in this class constructor -- to calculate how when the current
+   * servo position should be updated.
+   *
+   * @param next_pos Next position that it needs to move to.
+   * @param delay Delay between each position increment, until it's done.
+   */
+  PServo *move(unsigned char const next_pos, unsigned short const delay);
 
   Props const get_props(void) const;
   State const get_state(void) const;
