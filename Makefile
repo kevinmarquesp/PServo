@@ -30,11 +30,20 @@ DOXYGEN_BIN = $(VENDOR)/doxygen
 default: compile test
 
 .PHONY: deps
-deps:
-	git submodule update --init --recursive
+deps: deps/gtest deps/doxygen
+
+.PHONY: deps/gtest
+deps/gtest: deps/vendor
 	mkdir -p $(GTEST)/build && cd $(GTEST)/build && cmake .. && make
+
+.PHONY: deps/doxygen
+deps/doxygen: deps/vendor
 	mkdir -p $(DOXYGEN)/build && cd $(DOXYGEN)/build && cmake .. && make
 	mv -v $(DOXYGEN)/build/bin/doxygen $(DOXYGEN_BIN)
+
+.PHONY: deps/vendor
+deps/vendor:
+	git submodule update --init --recursive
 
 .PHONY: compile
 compile: $(SKETCHES)
