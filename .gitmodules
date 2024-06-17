@@ -4,3 +4,6 @@
 [submodule "extra/vendor/googletest"]
 	path = extra/vendor/googletest
 	url = https://github.com/google/googletest
+[submodule "extra/vendor/doxygen"]
+	path = extra/vendor/doxygen
+	url = https://github.com/doxygen/doxygen
