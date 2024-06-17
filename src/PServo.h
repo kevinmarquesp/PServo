@@ -241,6 +241,33 @@ public:
          unsigned char const max, bool const is_resetable)
       : _timer(timer), _min(min), _max(max), _is_resetable(is_resetable) {}
 
+  /*!
+   * This function is the most important one, it should be used everytime at the
+   * beginning of a move set collection, that's because it will handle most of
+   * the possible states of this machine -- such as count the number of actions
+   * it should take on the first call or check if the machine should halt or
+   * start over again.
+   *
+   * The reason this function, and the others, returns a pointer reference of
+   * the this same object class is to help you write sets of movements without
+   * so much code repetition. It is a *syntax sugar*, if you will.
+   *
+   * For example, instead of doing this:
+   * ```cpp
+   * myservo_machine.begin();
+   * myservo_machine.move(90, 10);
+   * myservo_machine.move(180, 50);
+   * myservo_machine.move(0, 30);
+   * ```
+   *
+   * You can simply do:
+   * ```cpp
+   * myservo_machine.begin()
+   *   ->move(90, 10)
+   *   ->move(180, 50)
+   *   ->move(0, 30);
+   * ```
+   */
   PServo *begin(void);
   PServo *move(unsigned char const next_pos, unsigned short const delay);
   PServo *move(unsigned char const next_pos);
