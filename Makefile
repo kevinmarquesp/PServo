@@ -16,13 +16,15 @@ CC_FLAGS = -Wall -I$(VENDOR)/googletest/googletest/include -I$(VENDOR)/googletes
 LD_FLAGS = -lpthread
 
 GTEST = $(VENDOR)/googletest
-GTEST_LIBS = $(GTEST)/build/lib/libgtest.a $(GTEST)/build/lib/libgtest_main.a
-
-GTEST_BIN = $(BIN)/gtest
 GTEST_DIR = extra/gtest
 GTEST_INIT = $(GTEST_DIR)/main.cpp
 GTEST_UNITS = $(wildcard $(GTEST_DIR)/test_*.cpp)
 GTEST_SRCS = $(wildcard $(SRC)/*.cpp)
+GTEST_BIN = $(BIN)/gtest
+GTEST_LIBS = $(GTEST)/build/lib/libgtest.a $(GTEST)/build/lib/libgtest_main.a
+
+DOXYGEN = $(BIN)/doxygen
+DOXYGEN_BIN = $(VENDOR)/doxygen
 
 .PHONY: default
 default: compile test
@@ -31,6 +33,8 @@ default: compile test
 deps:
 	git submodule update --init --recursive
 	mkdir -p $(GTEST)/build && cd $(GTEST)/build && cmake .. && make
+	mkdir -p $(DOXYGEN)/build && cd $(DOXYGEN)/build && cmake .. && make
+	mv -v $(DOXYGEN)/build/bin/doxygen $(DOXYGEN_BIN)
 
 .PHONY: compile
 compile: $(SKETCHES)
@@ -62,3 +66,4 @@ test/build: $(GTEST_SRCS) $(GTEST_UNITS) $(GTEST_INIT)
 clean:
 	rm -vrf bin
 	rm -vrf $(GTEST)/build
+	rm -vrf $(DOXYGEN)/build
