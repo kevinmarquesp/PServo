@@ -38,14 +38,14 @@ namespace ps {
  * @see ps::PServo
  */
 enum class State : unsigned char {
-  STANDBY,          //! Will count each action on this state.
-  INITIALIZED,      //! Measn that the actions was counted, so start it!
-  HALT,             //! No operation, the final action was completed (*NOOP*).
-  IN_ACTION,        //! Will keep updating the servo's position.
-  PAUSED,           //! No operation, but will keep updating the `_pc` (*NOOP*).
-  ERROR_UNEXPECTED, //! An unexpected state appeard where it shouldn't (*NOOP*).
-  ERROR_NOACTION,   //! Any actions was registered since `being()` (*NOOP*).
-  ERROR_TIMERPTR,   //! The timer pointer was not defined properly (*NOOP*).
+  STANDBY,          //!< Will count each action on this state.
+  INITIALIZED,      //!< Measn that the actions was counted, so start it!
+  HALT,             //!< No operation, the final action was completed (*NOOP*).
+  IN_ACTION,        //!< Will keep updating the servo's position.
+  PAUSED,           //!< No operation, but keep updating the `_pc` var (*NOOP*).
+  ERROR_UNEXPECTED, //!< An unexpected state appeard somewhere (*NOOP*).
+  ERROR_NOACTION,   //!< Any actions was registered since `being()` (*NOOP*).
+  ERROR_TIMERPTR,   //!< The timer pointer was not defined properly (*NOOP*).
 };
 
 /*!
@@ -56,9 +56,9 @@ enum class State : unsigned char {
  * @see ps::PServo
  */
 namespace Default {
-unsigned char constexpr MIN = 0;   //! Minimal default degree position.
-unsigned char constexpr MAX = 180; //! Maximum default degree position.
-unsigned char constexpr DELAY = 1; //! Default delay betwen movement updates.
+unsigned char constexpr MIN = 0;   //!< Minimal default degree position.
+unsigned char constexpr MAX = 180; //!< Maximum default degree position.
+unsigned char constexpr DELAY = 1; //!< Default delay between movement updates.
 }; // namespace Default
 
 /*!
@@ -86,17 +86,17 @@ unsigned char constexpr DELAY = 1; //! Default delay betwen movement updates.
  * @see ps::PServo
  */
 typedef struct Props {
-  State state;                 //! Current state of the `ps::PServo` machine.
-  unsigned long pc;            //! Last registered process counter.
-  unsigned long *const timer;  //! Pointer to the timer variable in use.
-  unsigned char const min;     //! Minimal position that this machine can be.
-  unsigned char const max;     //! Maximum position that this machine can be.
-  bool const is_resetable;     //! Will the machine reset after it's halted?
-  unsigned char curr_action;   //! Says wich action it's trying to perform.
-  unsigned char active_action; //! Which action is, actually, performing.
-  unsigned char actions_count; //! How much actions was registred.
-  unsigned char pos;           //! Current servo position, will not be written.
-  unsigned short delay;        //! Delay stored for the current action movement.
+  State state;                 //!< Current state of the `ps::PServo` machine.
+  unsigned long pc;            //!< Last registered process counter.
+  unsigned long *const timer;  //!< Pointer to the timer variable in use.
+  unsigned char const min;     //!< Minimal position that this machine can be.
+  unsigned char const max;     //!< Maximum position that this machine can be.
+  bool const is_resetable;     //!< Will the machine reset after it's halted?
+  unsigned char curr_action;   //!< Says wich action it's trying to perform.
+  unsigned char active_action; //!< Which action is, actually, performing.
+  unsigned char actions_count; //!< How much actions was registred.
+  unsigned char pos;           //!< Current servo position, will not be written.
+  unsigned short delay;        //!< Delay stored for the current action move.
 } Props;
 
 /*!
