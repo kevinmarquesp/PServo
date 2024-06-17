@@ -267,6 +267,9 @@ public:
    *   ->move(180, 50)
    *   ->move(0, 30);
    * ```
+   *
+   * @returns A pointer to this same object, allowing the use of the `->` syntax
+   * to write a stream of actions that this state machine will perform.
    */
   PServo *begin(void);
 
@@ -284,6 +287,9 @@ public:
    * function call, the one that you need to specify the movement speed too.
    *
    * @param next_pos Next position that it needs to move to.
+   *
+   * @returns A pointer to this same object, allowing the use of the `->` syntax
+   * to write a stream of actions that this state machine will perform.
    */
   PServo *move(unsigned char const next_pos);
 
@@ -308,6 +314,9 @@ public:
    *
    * @param next_pos Next position that it needs to move to.
    * @param delay Delay between each position increment, until it's done.
+   *
+   * @returns A pointer to this same object, allowing the use of the `->` syntax
+   * to write a stream of actions that this state machine will perform.
    */
   PServo *move(unsigned char const next_pos, unsigned short const delay);
 
@@ -347,6 +356,8 @@ private:
  * Serial.print("Current state: ");
  * Serial.println(ps::state_text(current_state));
  * ```
+ *
+ * @returns A string representing the name of the specified state.
  *
  * @see ps::PServo
  * @see ps::State
