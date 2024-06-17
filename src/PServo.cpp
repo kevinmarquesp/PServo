@@ -68,6 +68,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos,
     if (*_timer - _pc >= delay) {
       _pc = *_timer;
       _pos = _pos < next_pos ? _pos + 1 : _pos - 1;
+      _pos = _pos < _min ? _min : _pos > _max ? _max : _pos;
     }
 
     break;
