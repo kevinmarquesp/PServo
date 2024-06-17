@@ -11,7 +11,6 @@
  * function definition it's OK to use `using namespace ps;` at the top.
  */
 namespace ps {
-
 /*!
  * This class members has all the possible states for the `ps::PServo` state
  * machine. Use it along side with the `ps::PServo::get_state()` method to build
@@ -268,6 +267,11 @@ public:
    *   ->move(0, 30);
    * ```
    *
+   * Since this function is asynchronous, it **should be called every time in
+   * the `loop()` function**! That's because it uses the `_timer` value --
+   * defined in this class constructor -- to calculate how when the current
+   * servo position should be updated.
+   *
    * @returns A pointer to this same object, allowing the use of the `->` syntax
    * to write a stream of actions that this state machine will perform.
    */
@@ -364,8 +368,6 @@ private:
  * Return the specified state name in a string. Mainly used for debug and
  * monitoring propurses.
  *
- * @param s Valid state object of an `ps::PServo` state machine.
- *
  * Usage example:
  * ```cpp
  * ps::State const current_state = myservo_machine.get_state();
@@ -373,6 +375,8 @@ private:
  * Serial.print("Current state: ");
  * Serial.println(ps::state_text(current_state));
  * ```
+ *
+ * @param s Valid state object of an `ps::PServo` state machine.
  *
  * @returns A string representing the name of the specified state.
  *
