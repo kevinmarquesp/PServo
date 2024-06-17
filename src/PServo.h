@@ -4,6 +4,11 @@
  * Precise servo. Holds the core classes, functions and constants related to the
  * state machine that will control the position (it wont write anything
  * anywere because it doesn't depends on the `Arduino.h` library).
+ *
+ * When used in `.ino` files, it is recommended that the developer consider
+ * **not** using this namespace globally, the names inside this namespace may
+ * cause some confusion without the namespace's name as a context. Only inside a
+ * function definition it's OK to use `using namespace ps;` at the top.
  */
 namespace ps {
 
@@ -25,6 +30,12 @@ namespace ps {
  *   Serial.println((int)state);
  * }
  * ```
+ *
+ * > **Note**: The *NOOP* means that the state will not perform any action nor
+ * > update any value inside the machine. The responsability to handle and
+ * > update to a valid state will be at the user's hand.
+ *
+ * @see ps::PServo
  */
 enum class State : unsigned char {
   STANDBY,          //! Will count each action on this state.
@@ -39,7 +50,10 @@ enum class State : unsigned char {
 
 /*!
  * Normally the user doesn't need this values at all, they're here to construct
- * the `ps::PServo` object with these default values...
+ * the `ps::PServo` object with these default values. But it can't be quite
+ * helpful to know how this state machine works.
+ *
+ * @see ps::PServo
  */
 namespace Default {
 unsigned char constexpr MIN = 0;   //! Minimal default degree position.
@@ -51,6 +65,25 @@ unsigned char constexpr DELAY = 1; //! Default delay betwen movement updates.
  * List of all the private properties of `ps::PServo`. It's primary useful for
  * testing and monitoring strategies, but be aware that you cannot hack those
  * values inside the class, those are read only througth this struct.
+ *
+ * Usage example:
+ * ```cpp
+ * unsigned char active_action = myservo_machine.get_props().active_action;
+ * unsigned char const actions_count  myservo_machine.get_props().actions_count;
+ *
+ * Serial.print("Current action: ");
+ * Serial.print(active_action);
+ *
+ * if (active_action >= actions_count) {
+ *   Serial.println(" (last one)");
+ *
+ * } else {
+ *   Serial.println();
+ * }
+ * ```
+ *
+ * @see ps::State
+ * @see ps::PServo
  */
 typedef struct Props {
   State state;                 //! Current state of the `ps::PServo` machine.
@@ -104,6 +137,9 @@ typedef struct Props {
  *     ->move(0, 5);
  * }
  * ```
+ *
+ * @see ps::Props
+ * @see ps::State
  */
 class PServo {
 public:
@@ -151,13 +187,18 @@ private:
  * Return the specified state name in a string. Mainly used for debug and
  * monitoring propurses.
  *
- * For an example:
+ * @param s Valid state object of an `ps::PServo` state machine.
+ *
+ * Usage example:
  * ```cpp
  * ps::State const current_state = myservo_machine.get_state();
  *
  * Serial.print("Current state: ");
  * Serial.println(ps::state_text(current_state));
  * ```
+ *
+ * @see ps::PServo
+ * @see ps::State
  */
 char const *state_text(State s);
 }; // namespace ps
