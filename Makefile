@@ -23,8 +23,8 @@ GTEST_SRCS = $(wildcard $(SRC)/*.cpp)
 GTEST_BIN = $(BIN)/gtest
 GTEST_LIBS = $(GTEST)/build/lib/libgtest.a $(GTEST)/build/lib/libgtest_main.a
 
-DOXYGEN = $(BIN)/doxygen
-DOXYGEN_BIN = $(VENDOR)/doxygen
+DOXYGEN = $(VENDOR)/doxygen
+DOXYGEN_BIN = $(BIN)/doxygen
 
 .PHONY: default
 default: compile test
@@ -39,6 +39,7 @@ deps/gtest: deps/vendor
 .PHONY: deps/doxygen
 deps/doxygen: deps/vendor
 	mkdir -p $(DOXYGEN)/build && cd $(DOXYGEN)/build && cmake .. && make
+	mkdir -vp $(BIN)
 	mv -v $(DOXYGEN)/build/bin/doxygen $(DOXYGEN_BIN)
 
 .PHONY: deps/vendor
@@ -71,8 +72,12 @@ test/build: $(GTEST_SRCS) $(GTEST_UNITS) $(GTEST_INIT)
 	[ -e $(BIN) ] || mkdir -v $(BIN)
 	$(CC) $(CC_FLAGS) $^ -o $(GTEST_BIN) $(GTEST_LIBS) $(LD_FLAGS)
 
+.PHONY: docs
+docs:
+	./$(DOXYGEN_BIN)
+
 .PHONY: clean
 clean:
-	rm -vrf bin
+	rm -vrf $(BIN)
 	rm -vrf $(GTEST)/build
 	rm -vrf $(DOXYGEN)/build
