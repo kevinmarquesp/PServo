@@ -33,3 +33,6 @@
 
 # Compiled and Executables
 bin/
+
+# Compiled documentation pages
+docs/
