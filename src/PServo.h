@@ -143,15 +143,100 @@ typedef struct Props {
  */
 class PServo {
 public:
+  /*!
+   * The constructor need, at least, a pointer to a **timer** variable. This
+   * variable, normally, is a global one, that multiple state machines can read
+   * to calculate the delay asynchronously.
+   *
+   * For an example, at the top of your main Arduino sketch file, you may have a
+   * `unsigned long timer = 0;` line, then, inside the `loop()` function, you'll
+   * update that variable value everytime with the `millis()` function -- which
+   * will return the time duration since your Arduino board was booted up, in
+   * milisseconds.
+   *
+   * For an example:
+   * ```cpp
+   * unsigned long timer = 0;
+   *
+   * ps::PServo myservo_machine(&timer);
+   *
+   * void setup() {
+   *   // Your setup code...
+   * }
+   *
+   * void loop() {
+   *   timer = millis();
+   *
+   *   // Your loop code...
+   * }
+   * ```
+   *
+   * This choice was made because every pointer in C++ uses 16 bits of memory
+   * all the time, and an `unsigned long` uses 64 bits, which is much havier,
+   * mainly when dealing with multiple object instances of this class.
+   *
+   * @param timer Pointer to a timer variable, normally related to the
+   * `millis()` function.
+   *
+   * @see ps::PServo
+   */
   PServo(unsigned long *const timer) : _timer(timer) {}
 
+  /*!
+   * The constructor need, at least, a pointer to a **timer** variable. This
+   * variable, normally, is a global one, that multiple state machines can read
+   * to calculate the delay asynchronously.
+   *
+   * You can also pass the reset setting, a *bolean* type parameter, to the
+   * constructor. By default, the machine will not reset after the last action
+   * completion.
+   *
+   * @param timer Pointer to a timer variable, normally related to the
+   * `millis()` function.
+   * @param is_resetable Configure the machine to reset after it's halted.
+   */
   PServo(unsigned long *const timer, bool const is_resetable)
       : _timer(timer), _is_resetable(is_resetable) {}
 
+  /*!
+   * The constructor need, at least, a pointer to a **timer** variable. This
+   * variable, normally, is a global one, that multiple state machines can read
+   * to calculate the delay asynchronously.
+   *
+   * If needed, you can also configure the **max** and **min** position that
+   * this machine can assume. It's quite useful when your building a robot, as
+   * an example, that some movements can break the structure of the robot
+   * phisically.
+   *
+   * @param timer Pointer to a timer variable, normally related to the
+   * `millis()` function.
+   * @param min Minimul position value that this machine can be.
+   * @param max Maximum position value that this machine can be.
+   *
+   * @see ps::Default
+   */
   PServo(unsigned long *const timer, unsigned char const min,
          unsigned char const max)
       : _timer(timer), _min(min), _max(max) {}
 
+  /*!
+   * The constructor need, at least, a pointer to a **timer** variable. This
+   * variable, normally, is a global one, that multiple state machines can read
+   * to calculate the delay asynchronously.
+   *
+   * And for more advanced configuration, or verbosity, you can combine the
+   * other constructors into just this one. Where you pass the timer pointer,
+   * the min-max values and the seeting to define if this machine should reset
+   * to the first movement after done or not!
+   *
+   * @param timer Pointer to a timer variable, normally related to the
+   * `millis()` function.
+   * @param min Minimul position value that this machine can be.
+   * @param max Maximum position value that this machine can be.
+   * @param is_resetable Configure the machine to reset after it's halted.
+   *
+   * @see ps::Default
+   */
   PServo(unsigned long *const timer, unsigned char const min,
          unsigned char const max, bool const is_resetable)
       : _timer(timer), _min(min), _max(max), _is_resetable(is_resetable) {}
