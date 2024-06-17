@@ -320,7 +320,24 @@ public:
    */
   PServo *move(unsigned char const next_pos, unsigned short const delay);
 
+  /*!
+   * This method allows the user to inspect all the private attributes of the
+   * object. It's quite useful for loggin or monitoring sketches, or maybe to
+   * build more complex sketches that behaves differently depending of the state
+   * of this object.
+   *
+   * @returns A `ps::Props` struct with all the private members values of the
+   * instantiated object.
+   */
   Props const get_props(void) const;
+
+  /*!
+   * Used to know which state the machine is currently in. Used to catch state
+   * and handle state errors or build complex systems that behaves differently
+   * based on the state of this machine.
+   *
+   * @returns The current state of the machine.
+   */
   State const get_state(void) const;
 
 private:
