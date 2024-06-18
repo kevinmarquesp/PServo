@@ -29,10 +29,12 @@ jobs:
           mkdir -vp ~/.local/bin
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh |
             BINDIR=~/.local/bin sh
+
+      - name: Install the Arduino AVR core
+        run: |
           arduino-cli core install arduino:avr
 
       - name: Compile Examples
         working-directory: ./
         run: |
-          git submodule update --init --recursive
-          make compile
+          make deps/vendor compile

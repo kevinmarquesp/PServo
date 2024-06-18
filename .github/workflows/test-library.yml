@@ -31,7 +31,7 @@ jobs:
       - name: Build the C++ Dependencies
         working-directory: ./
         run: |
-          make deps
+          make deps/gtest
 
       - name: Run All Tests
         working-directory: ./
