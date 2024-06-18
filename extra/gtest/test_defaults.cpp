@@ -9,7 +9,7 @@ TEST(Defaults, should_return_default_constructor_props) {
 
   PServo pservo(&timer);
   State const s = pservo.get_state();
-  Props const p = pservo.get_props();
+  Props const p = pservo.props();
 
   EXPECT_EQ(s, State::STANDBY);
   EXPECT_EQ(p.pc, 0);
@@ -28,7 +28,7 @@ TEST(Defaults, should_asign_custom_restable) {
   bool const is_resetable = true;
 
   PServo pservo(&timer, is_resetable);
-  Props const p = pservo.get_props();
+  Props const p = pservo.props();
 
   EXPECT_EQ(p.min, Default::MIN);
   EXPECT_EQ(p.max, Default::MAX);
@@ -43,7 +43,7 @@ TEST(Defaults, should_asign_custom_min_and_max) {
   unsigned char const custom_max = 120;
 
   PServo pservo(&timer, custom_min, custom_max);
-  Props const p = pservo.get_props();
+  Props const p = pservo.props();
 
   EXPECT_EQ(p.min, custom_min);
   EXPECT_EQ(p.max, custom_max);
@@ -59,7 +59,7 @@ TEST(Defaults, should_asign_custom_min_max_and_restable) {
   bool const is_resetable = true;
 
   PServo pservo(&timer, custom_min, custom_max, is_resetable);
-  Props const p = pservo.get_props();
+  Props const p = pservo.props();
 
   EXPECT_EQ(p.min, custom_min);
   EXPECT_EQ(p.max, custom_max);
