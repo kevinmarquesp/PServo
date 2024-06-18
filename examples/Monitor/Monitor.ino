@@ -45,7 +45,7 @@ inline void state_logger(char *const buff, const ps::PServo *const pservo) {
   using namespace ps;
 
   char const *s = state_text(pservo->get_state());
-  Props const p = pservo->get_props();
+  Props const p = pservo->props();
 
   sprintf(buff, "[%.4d|%.4d] %3dº with %.4d, %2d %2d/%d in %s",
           (unsigned short)timer, (unsigned short)p.pc, p.pos, p.delay,

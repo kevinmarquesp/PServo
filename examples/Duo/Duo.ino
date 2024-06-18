@@ -22,8 +22,8 @@ void setup(void) {
 void loop(void) {
   timer = millis();
 
-  myservo_a.write(myservo_machine_a.get_props().pos);
-  myservo_b.write(myservo_machine_b.get_props().pos);
+  myservo_a.write(myservo_machine_a.pos());
+  myservo_b.write(myservo_machine_b.pos());
 
   myservo_machine_a.begin()
       ->move(90, 5)

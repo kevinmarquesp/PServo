@@ -17,7 +17,7 @@ void setup(void) {
 void loop(void) {
   timer = millis();
 
-  myservo.write(myservo_machine.get_props().pos);
+  myservo.write(myservo_machine.pos());
 
   myservo_machine.begin()
       ->move(90, 15)
