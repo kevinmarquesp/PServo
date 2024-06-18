@@ -67,8 +67,8 @@ unsigned char constexpr DELAY = 1; //!< Default delay between movement updates.
  *
  * Usage example:
  * ```cpp
- * unsigned char active_action = myservo_machine.get_props().active_action;
- * unsigned char const actions_count  myservo_machine.get_props().actions_count;
+ * unsigned char active_action = myservo_machine.props().active_action;
+ * unsigned char const actions_count  myservo_machine.props().actions_count;
  *
  * Serial.print("Current action: ");
  * Serial.print(active_action);
@@ -128,7 +128,7 @@ typedef struct Props {
  * void loop() {
  *   timer = millis();
  *
- *   myservo.write(myservo_machine.get_props().pos);
+ *   myservo.write(myservo_machine.props().pos);
  *
  *   myservo_machine.begin()
  *     ->move(90, 10)
@@ -333,7 +333,7 @@ public:
    * @returns A `ps::Props` struct with all the private members values of the
    * instantiated object.
    */
-  Props const get_props(void) const;
+  Props const props(void) const;
 
   /*!
    * Used to know which state the machine is currently in. Used to catch state

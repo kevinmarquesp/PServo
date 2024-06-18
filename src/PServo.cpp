@@ -119,7 +119,7 @@ ps::PServo *ps::PServo::move(unsigned char const next_pos) {
   return this->move(next_pos, Default::DELAY);
 }
 
-ps::Props const ps::PServo::get_props(void) const {
+ps::Props const ps::PServo::props(void) const {
   using namespace ps;
 
   return Props{
