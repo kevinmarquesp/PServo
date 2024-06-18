@@ -345,6 +345,15 @@ public:
   State const get_state(void) const;
 
   /*!
+   * Check if the state machine is in the specified state. Which is better than
+   * getting the state manually and then comparing it by hand.
+   *
+   * @return A *boolean* that tells if the machine state is in the state
+   * specified or not.
+   */
+  bool is_state(State s) const;
+
+  /*!
    * Used to get the current servo position, in order to mirror this value to a
    * real servo, which will write that value position every time on the `loop()`
    * function.
