@@ -133,8 +133,8 @@ unsigned short&#160;</td><td class="memItemRight" valign="bottom"><b>delay</b></
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>List of all the private properties of <code><a class="el" href="classps_1_1PServo.html">ps::PServo</a></code>. It's primary useful for testing and monitoring strategies, but be aware that you cannot hack those values inside the class, those are read only througth this struct.</p>
-<p>Usage example: </p><div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="#a1339b018c629e66094f4300739074e7a">active_action</a> = myservo_machine.get_props().active_action;</div>
-<div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code hl_variable" href="#ac5176f65bc58ec28ba39bbc2c418baa5">actions_count</a>  myservo_machine.get_props().actions_count;</div>
+<p>Usage example: </p><div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="#a1339b018c629e66094f4300739074e7a">active_action</a> = myservo_machine.props().active_action;</div>
+<div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code hl_variable" href="#ac5176f65bc58ec28ba39bbc2c418baa5">actions_count</a>  myservo_machine.props().actions_count;</div>
 <div class="line"> </div>
 <div class="line">Serial.print(<span class="stringliteral">&quot;Current action: &quot;</span>);</div>
 <div class="line">Serial.print(<a class="code hl_variable" href="#a1339b018c629e66094f4300739074e7a">active_action</a>);</div>
