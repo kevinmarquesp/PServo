@@ -344,6 +344,16 @@ public:
    */
   State const get_state(void) const;
 
+  /*!
+   * Used to get the current servo position, in order to mirror this value to a
+   * real servo, which will write that value position every time on the `loop()`
+   * function.
+   *
+   * @returns The current registered postion, this value whould be between the
+   * `_min` and `_max` values, setted on the constructor of the class.
+   */
+  unsigned char pos(void) const;
+
 private:
   State _state = State::STANDBY;
 

@@ -139,6 +139,8 @@ ps::Props const ps::PServo::get_props(void) const {
 
 ps::State const ps::PServo::get_state(void) const { return _state; }
 
+unsigned char ps::PServo::pos(void) const { return _pos; }
+
 char const *ps::state_text(ps::State s) {
   using namespace ps;
 
