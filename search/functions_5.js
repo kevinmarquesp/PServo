@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['state_5ftext_0',['state_text',['../namespaceps.html#ad273ebe19630b731f3314075a7d1b8a3',1,'ps']]]
+  ['reset_0',['reset',['../classps_1_1PServo.html#a62c7c6a3cc1979cd061c141a23270934',1,'ps::PServo']]]
 ];

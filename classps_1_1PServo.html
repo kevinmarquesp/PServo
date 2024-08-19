@@ -108,6 +108,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aab2e7dee494b423e3b1325b1c4f0cddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a791872c011df22709001ea482f31df9e" id="r_a791872c011df22709001ea482f31df9e"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a791872c011df22709001ea482f31df9e">pos</a> (void) const</td></tr>
 <tr class="separator:a791872c011df22709001ea482f31df9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62c7c6a3cc1979cd061c141a23270934" id="r_a62c7c6a3cc1979cd061c141a23270934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62c7c6a3cc1979cd061c141a23270934">reset</a> (void)</td></tr>
+<tr class="separator:a62c7c6a3cc1979cd061c141a23270934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main class of the library, represents the <b>state machine</b> of an asyncronous servo motor object. Which means that this can hold the position (in deg) inside it, so you can get use that information to wirte in a real servo motor component.</p>
@@ -485,6 +487,48 @@ Public Member Functions</h2></td></tr>
 <p>This method allows the user to inspect all the private attributes of the object. It's quite useful for loggin or monitoring sketches, or maybe to build more complex sketches that behaves differently depending of the state of this object.</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code><a class="el" href="structps_1_1Props.html">ps::Props</a></code> struct with all the private members values of the instantiated object. </dd></dl>
 
+</div>
+</div>
+<a id="a62c7c6a3cc1979cd061c141a23270934" name="a62c7c6a3cc1979cd061c141a23270934"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62c7c6a3cc1979cd061c141a23270934">&#9670;&#160;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ps::PServo::reset </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resets the machine state back to the SANTDBY, the counter of actions is also reset to 0. It's useful when you want to use a scene based moveset pattern. For an example:</p>
+<div class="fragment"><div class="line"><span class="keywordflow">switch</span> (curr_scene) {</div>
+<div class="line"><span class="keywordflow">case</span> 0:</div>
+<div class="line">  machine.begin()-&gt;move(180, 100);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (machine.is_state(<a class="code hl_enumvalue" href="namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78abf2d798abfe8267da4f101692b6cfecd">ps::State::HALT</a>)) {</div>
+<div class="line">    machine.reset();</div>
+<div class="line"> </div>
+<div class="line">    curr_scene = 1;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">case</span> 1:</div>
+<div class="line">  machine.begin()-&gt;move(0, 25);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (machine.is_state(<a class="code hl_enumvalue" href="namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78abf2d798abfe8267da4f101692b6cfecd">ps::State::HALT</a>)) {</div>
+<div class="line">    machine.reset();</div>
+<div class="line"> </div>
+<div class="line">    curr_scene = 0;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">break</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceps_html_ad6e4db5c52b1a0b70eb8002dd6045e78abf2d798abfe8267da4f101692b6cfecd"><div class="ttname"><a href="namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78abf2d798abfe8267da4f101692b6cfecd">ps::State::HALT</a></div><div class="ttdeci">@ HALT</div><div class="ttdoc">No operation, the final action was completed (NOOP).</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
