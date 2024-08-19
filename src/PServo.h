@@ -91,7 +91,7 @@ typedef struct Props {
   unsigned char const min;     //!< Minimal position that this machine can be.
   unsigned char const max;     //!< Maximum position that this machine can be.
   bool const is_resetable;     //!< Will the machine reset after it's halted?
-  unsigned char curr_action;   //!< Says wich action it's trying to perform.
+  unsigned char curr_action;   //!< Says wich action it's **trying** to perform.
   unsigned char active_action; //!< Which action is, actually, performing.
   unsigned char actions_count; //!< How much actions was registred.
   unsigned char pos;           //!< Current servo position, will not be written.
@@ -362,6 +362,39 @@ public:
    * `_min` and `_max` values, setted on the constructor of the class.
    */
   unsigned char pos(void) const;
+
+  /*!
+   * Resets the machine state back to the SANTDBY, the counter of actions is
+   * also reset to 0. It's useful when you want to use a scene based moveset
+   * pattern. For an example:
+   *
+   * ```cpp
+   * switch (curr_scene) {
+   * case 0:
+   *   machine.begin()->move(180, 100);
+   *
+   *   if (machine.is_state(ps::State::HALT)) {
+   *     machine.reset();
+   *
+   *     curr_scene = 1;
+   *   }
+   *
+   *   break;
+   *
+   * case 1:
+   *   machine.begin()->move(0, 25);
+   *
+   *   if (machine.is_state(ps::State::HALT)) {
+   *     machine.reset();
+   *
+   *     curr_scene = 0;
+   *   }
+   *
+   *   break;
+   * }
+   * ```
+   */
+  void reset(void);
 
 private:
   State _state = State::STANDBY;

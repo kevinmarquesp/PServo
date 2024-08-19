@@ -137,6 +137,15 @@ ps::Props const ps::PServo::props(void) const {
   };
 }
 
+void ps::PServo::reset(void) {
+  if (_state != State::HALT)
+    return;
+
+  _state = State::STANDBY;
+  _active_action = 0;
+  _actions_count = 0;
+}
+
 ps::State const ps::PServo::get_state(void) const { return _state; }
 
 bool ps::PServo::is_state(ps::State s) const { return _state == s; }
