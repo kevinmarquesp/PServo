@@ -1,7 +1,12 @@
 var searchData=
 [
-  ['test_0',['Run a Specific Test',['../index.html#autotoc_md6',1,'']]],
-  ['testing_20arduino_20board_20not_20required_1',['Testing (Arduino Board not Required)',['../index.html#autotoc_md4',1,'']]],
-  ['tests_2',['Run All Tests',['../index.html#autotoc_md5',1,'']]],
-  ['timer_3',['timer',['../structps_1_1Props.html#af7d6c9ae4f4b729f1183f663883899a3',1,'ps::Props']]]
+  ['paused_0',['PAUSED',['../namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78a99b2439e63f73ad515f7ab2447a80673',1,'ps']]],
+  ['pc_1',['pc',['../structps_1_1Props.html#a616b24c36ed245bb5153aa507ecde42f',1,'ps::Props']]],
+  ['pos_2',['pos',['../structps_1_1Props.html#a718ddf5d16e8e211d0b7c5a6d1e081a3',1,'ps::Props::pos'],['../classps_1_1PServo.html#a791872c011df22709001ea482f31df9e',1,'ps::PServo::pos()']]],
+  ['props_3',['Props',['../structps_1_1Props.html',1,'ps']]],
+  ['props_4',['props',['../classps_1_1PServo.html#a579950b03598fd2061ed28cb60490dd8',1,'ps::PServo']]],
+  ['props_5',['Props',['../namespaceps.html#a043ed52f54055a29bdca3e4083f6d80c',1,'ps']]],
+  ['ps_6',['ps',['../namespaceps.html',1,'']]],
+  ['ps_3a_3adefault_7',['Default',['../namespaceps_1_1Default.html',1,'ps']]],
+  ['pservo_8',['PServo',['../classps_1_1PServo.html',1,'ps::PServo'],['../classps_1_1PServo.html#aa1c7e663f4ddb9a6ee4829aae13f5cf6',1,'ps::PServo::PServo(unsigned long *const timer)'],['../classps_1_1PServo.html#aade4e2a48186cdee0e15ccdd1036b486',1,'ps::PServo::PServo(unsigned long *const timer, bool const is_resetable)'],['../classps_1_1PServo.html#af797d7b3f4f0bb69e23ec656b095ad61',1,'ps::PServo::PServo(unsigned long *const timer, unsigned char const min, unsigned char const max)'],['../classps_1_1PServo.html#a188cf28801ca0ab2710336dcd3ac1114',1,'ps::PServo::PServo(unsigned long *const timer, unsigned char const min, unsigned char const max, bool const is_resetable)'],['../index.html',1,'PServo']]]
 ];

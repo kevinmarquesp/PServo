@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['delay_0',['delay',['../structps_1_1Props.html#afc6f9f1c8ecf314a863fd44cd203010a',1,'ps::Props']]],
-  ['delay_1',['DELAY',['../namespaceps_1_1Default.html#ada16a56962d5f9caa8bc9a5394c8c1c0',1,'ps::Default']]]
+  ['begin_0',['begin',['../classps_1_1PServo.html#ad2571040d0a2f38d72a44c8c75960939',1,'ps::PServo']]],
+  ['board_20not_20required_1',['Testing (Arduino Board not Required)',['../index.html#autotoc_md7',1,'']]]
 ];

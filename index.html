@@ -74,25 +74,125 @@ $(function() {
   <div class="headertitle"><div class="title">PServo </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> </p>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> An Arduino library designed to make working with multiple servo motors simpler and more intuitive, especially for those building complex robots. With PServo, you can easily control the movements of multiple servos at the same time and even create more advanced motion sequences. The library introduces a design pattern that I call Scene-Oriented Programming, making it easier to choreograph and synchronize servo movements for your projects.</p>
+<div class="image">
+<img src="demo.gif" alt=""/>
+<div class="caption">
+PServo demo</div></div>
+    <h1><a class="anchor" id="autotoc_md1"></a>
 Installation</h1>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<p>PServo is built as a <em>state machine</em>, so it requires the <code>Servo.h</code> library to function properly. Make sure you have that installed as well.</p>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Option 1: Manual Installation</h2>
+<ul>
+<li>Visit the <a href="https://github.com/kevinmarquesp/PServo/releases">releases page</a> on GitHub.</li>
+<li>Download the <code>.zip</code> file for the version you want.</li>
+<li>Extract the <code>.zip</code> file into your Arduino libraries folder:<ul>
+<li>On Linux or Mac: <code>~/Arduino/libraries</code></li>
+<li>On Windows: <code>Documents\Arduino\libraries</code></li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Option 2: Using Arduino CLI (Recommended)</h2>
+<p>If you prefer a faser method, you can use the following <a href="https://arduino.github.io/arduino-cli/1.0/">Arduino CLI</a> command:</p>
+<div class="fragment"><div class="line">arduino-cli lib install --git-url https://github.com/kevinmarquesp/PServo</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>&zwj;[!NOTE] If you haven’t configured the Arduino CLI to allow unsafe library installations, you might need to follow <a href="https://arduino.github.io/arduino-cli/0.35/configuration/#configuration-keys">this documentation</a> to enable it. In short, run <code>arduino-cli config init</code>, open the generated file, and set <code>library.enable_unsafe_install</code> to <code>true</code>. That’s it! </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Usage</h1>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<p>This library doesn’t use the <code>delay()</code> function to control the speed of movements, as it would pause the entire program, which isn’t suitable for most Arduino applications. Instead, it relies on the <code>millis()</code> function to determine when to wait and when to execute movements, similar to other Arduino projects.</p>
+<p>The general structure of your application should look something like this:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> timer = 0;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> setup(<span class="keywordtype">void</span>) {</div>
+<div class="line">  <span class="comment">// ...rest of the code...</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> loop(<span class="keywordtype">void</span>) {</div>
+<div class="line">  timer = millis();</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// ...rest of the code...</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>First, import the <code>Servo.h</code> and <code><a class="el" href="PServo_8h_source.html">PServo.h</a></code> libraries, then create the servo objects you want to control, along with a PServo object for each servo. The PServo object will calculate the servo position, and you'll need to update the actual servo object with these calculated values.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Servo.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;PServo.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> timer = 0;</div>
+<div class="line"> </div>
+<div class="line">Servo servo_right;</div>
+<div class="line">Servo servo_left;</div>
+<div class="line"> </div>
+<div class="line">PServo machine_right(&amp;timer, 0, 180, <span class="keyword">true</span>);</div>
+<div class="line">PServo machine_left(&amp;timer, 0, 180, <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> setup(<span class="keywordtype">void</span>) {</div>
+<div class="line">  servo_right.attach(7);</div>
+<div class="line">  servo_left.attach(6);</div>
+<div class="line">}</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>&zwj;In this example, the line <code>PServo machine_left(&amp;timer, 0, 180, true);</code> initializes a PServo object with a minimum value of 0, a maximum value of 180, and the <code>true</code> parameter indicates that this machine allows looping. When the movement sequence ends, it will automatically restart. </p>
+</blockquote>
+<p>Since the <code>timer</code> pointer lets the PServo object track the current time in your application, you'll need to update the servo positions within the <code>loop()</code> function. The process involves getting the current position from each PServo object and then writing that position to the corresponding servo object:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> loop(<span class="keywordtype">void</span>) {</div>
+<div class="line">    timer = millis();</div>
+<div class="line"> </div>
+<div class="line">    servo_right.write(machine_right.get_pos());</div>
+<div class="line">    servo_left.write(machine_left.get_pos());</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ...rest of the code...</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>To configure the moveset for the servos, start with the <code>.begin()</code> method, followed by a series of <code>move()</code> calls. The <code>.begin()</code> method indicates the start of a new movement sequence, while each <code>move()</code> method specifies a movement to be performed. The PServo object will manage which movement is currently active and which should be skipped. It’s important to define this moveset within the <code>loop()</code> function:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> loop(<span class="keywordtype">void</span>) {</div>
+<div class="line">    <span class="comment">// ...rest of the code...</span></div>
+<div class="line"> </div>
+<div class="line">    machine_right.begin();</div>
+<div class="line">    machine_right.move(180, 15);  <span class="comment">// Go to 180º waiting 15 ms for each deg update.</span></div>
+<div class="line">    machine_right.move(0, 20);    <span class="comment">// Go to 0º waiting 0 ms for each deg update.</span></div>
+<div class="line"> </div>
+<div class="line">    machine_left.begin();</div>
+<div class="line">    machine_left.move(180, 20);</div>
+<div class="line">    machine_left.move(0, 0);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Since repeatedly writing the machine name can be tedious, this library provides a syntax shortcut to simplify your code. The following code does the same as the one above:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> loop(<span class="keywordtype">void</span>) {</div>
+<div class="line">    <span class="comment">// ...rest of the code...</span></div>
+<div class="line"> </div>
+<div class="line">    machine_right.begin()</div>
+<div class="line">        -&gt;move(180, 15)</div>
+<div class="line">        -&gt;move(0, 20);</div>
+<div class="line"> </div>
+<div class="line">    machine_left.begin()</div>
+<div class="line">        -&gt;move(180, 20)</div>
+<div class="line">        -&gt;move(0, 0);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>This is just a basic example. For more details on what this library can do and how to implement additional features, check out the <a href="https://kevinmarquesp.github.io/PServo/">official documentation</a> and the <a href="https://github.com/kevinmarquesp/PServo/tree/main/examples">example sketches</a> to learn more.</p>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Contributing</h1>
+<p>If you’d like to contribute to the development of PServo, follow these steps:</p>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Getting Started</h2>
+<ol type="1">
+<li>Clone the repository:</li>
+</ol>
 <div class="fragment"><div class="line">git clone https://github.com/kevinmarquesp/PServo</div>
 <div class="line">cd PServo</div>
-<div class="line"> </div>
-<div class="line">make deps # Clone and/or build vendorized libraries.</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><ol type="1">
+<li>Set up dependencies:</li>
+</ol>
+<div class="fragment"><div class="line">make deps # Clone and/or build vendorized libraries.</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Testing (Arduino Board not Required)</h2>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<p>You can run tests without needing an Arduino board.</p>
+<h3><a class="anchor" id="autotoc_md8"></a>
 Run All Tests</h3>
+<p>To run the entire test suite:</p>
 <div class="fragment"><div class="line">make deps</div>
 <div class="line">make test</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
 Run a Specific Test</h3>
+<p>To run a specific test, specify the test file with the <code>GTEST_UNITS</code> variable:</p>
 <div class="fragment"><div class="line">make deps</div>
 <div class="line">make test GTEST_UNITS=extra/gtest/test_gtest.cpp</div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->

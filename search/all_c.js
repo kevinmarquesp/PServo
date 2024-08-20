@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['specific_20test_0',['Run a Specific Test',['../index.html#autotoc_md6',1,'']]],
-  ['standby_1',['STANDBY',['../namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78aeea559d5c56d48e94e586f7fe000c0b1',1,'ps']]],
-  ['state_2',['state',['../structps_1_1Props.html#ab00227ad37460dc4a4ca6b31225f048f',1,'ps::Props']]],
-  ['state_3',['State',['../namespaceps.html#ad6e4db5c52b1a0b70eb8002dd6045e78',1,'ps']]],
-  ['state_5ftext_4',['state_text',['../namespaceps.html#ad273ebe19630b731f3314075a7d1b8a3',1,'ps']]]
+  ['option_201_3a_20manual_20installation_0',['Option 1: Manual Installation',['../index.html#autotoc_md2',1,'']]],
+  ['option_202_3a_20using_20arduino_20cli_20recommended_1',['Option 2: Using Arduino CLI (Recommended)',['../index.html#autotoc_md3',1,'']]]
 ];
